@@ -424,9 +424,7 @@ export function setSubtitleStreamIndex(
     ) {
         let textStreamUrl;
 
-        if (subtitleStream.IsExternal && subtitleStream.DeliveryUrl) {
-            textStreamUrl = subtitleStream.DeliveryUrl;
-        } else if (subtitleStream.DeliveryUrl) {
+        if (subtitleStream.DeliveryUrl) {
             textStreamUrl = JellyfinApi.createUrl(subtitleStream.DeliveryUrl);
         }
 

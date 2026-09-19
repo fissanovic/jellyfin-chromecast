@@ -459,25 +459,19 @@ export function createStreamInfo(
             return;
         }
 
-        if (!info.subtitleStreamIndex) {
+        if (subtitleStream.Index == null) {
             return;
         }
 
         const track = new cast.framework.messages.Track(
-            info.subtitleStreamIndex,
+            subtitleStream.Index,
             cast.framework.messages.TrackType.TEXT
         );
 
-        if (subtitleStream.IsExternal && subtitleStream.DeliveryUrl) {
-            track.trackContentId = subtitleStream.DeliveryUrl;
-        } else if (subtitleStream.DeliveryUrl) {
+        if (subtitleStream.DeliveryUrl) {
             track.trackContentId = JellyfinApi.createUrl(
                 subtitleStream.DeliveryUrl
             );
-        }
-
-        if (subtitleStream.Index) {
-            track.trackId = subtitleStream.Index;
         }
 
         if (subtitleStream.Language) {
