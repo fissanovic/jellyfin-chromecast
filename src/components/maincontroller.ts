@@ -29,6 +29,8 @@ import { PlaybackManager, type PlaybackState } from './playbackManager';
 import { CommandHandler } from './commandHandler';
 import { getMaxBitrateSupport } from './codecSupportHelper';
 import type { BusMessageType, PlayRequest, StreamInfo } from '~/types/global';
+import { AppStatus } from '../types/appStatus';
+import { DocumentManager } from './documentManager';
 
 window.castReceiverContext = cast.framework.CastReceiverContext.getInstance();
 window.playerManager = window.castReceiverContext.getPlayerManager();
@@ -88,7 +90,15 @@ export function onMediaElementPause(): void {
  * onMediaElementPlaying
  */
 export function onMediaElementPlaying(): void {
-    if (PlaybackManager.playbackState.isChangingStream) {
+    const playbackState = PlaybackManager.playbackState;
+
+    if (playbackState.mediaType === 'Audio') {
+        DocumentManager.setAppStatus(AppStatus.Audio);
+    } else {
+        DocumentManager.setAppStatus(AppStatus.PlayingWithControls);
+    }
+
+    if (playbackState.isChangingStream) {
         return;
     }
 
